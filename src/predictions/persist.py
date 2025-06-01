@@ -65,4 +65,4 @@ class Persist:
             'futures': self.__get_node(structures.futures.drop(columns='observation'))}
         nodes.update(specifications._asdict())
 
-        return self.__persist(nodes=nodes, name=str(specifications.ts_id))
+        return self.__persist(nodes=nodes, name=str(specifications.hospital_code))
