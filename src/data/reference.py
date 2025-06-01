@@ -24,31 +24,35 @@ class Reference:
         # An instance for reading & writing CSV (comma-separated values) data
         self.__stream = src.functions.streams.Streams()
 
-        # Rename
-        self.__rename = {'from': 'starting', 'to': 'until', 'station_latitude': 'latitude',
-                         'station_longitude': 'longitude'}
+    def __get_boards(self):
 
-    def __get_reference(self):
+        uri = self.__endpoint + 'boards.csv'
+        usecols = ['health_board_code', 'health_board_name']
+
+        text = txa.TextAttributes(uri=uri, header=0, usecols=usecols)
+
+        return self.__stream.read(text=text)
+
+    def __get_institutions(self):
         """
 
         :return:
         """
 
-        uri = self.__endpoint + 'assets.csv'
-        usecols = ['station_id', 'station_name', 'catchment_id', 'catchment_name', 'ts_id', 'ts_name',
-                   'from', 'to', 'station_latitude', 'station_longitude', 'river_name']
+        uri = self.__endpoint + 'institutions.csv'
+        usecols = ['hospital_code',	'hospital_name', 'post_code', 'health_board_code', 'hscp_code',
+                   'council_area', 'intermediate_zone',	'data_zone']
         text = txa.TextAttributes(uri=uri, header=0, usecols=usecols)
 
         return self.__stream.read(text=text)
 
-    def exc(self, codes: list[int]) -> pd.DataFrame:
+    def exc(self, codes: list[str]) -> pd.DataFrame:
         """
 
         :param codes:
         :return:
         """
 
-        reference = self.__get_reference()
-        reference.rename(columns=self.__rename, inplace=True)
+        reference = self.__get_institutions().merge(self.__get_boards(), how='left', on='health_board_code')
 
-        return reference.loc[reference['ts_id'].isin(codes), :]
+        return reference.loc[reference['hospital_code'].isin(codes), :]
