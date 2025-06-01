@@ -25,34 +25,30 @@ class Structures:
         estimates['date'] = pd.to_datetime(estimates['timestamp'], unit='us')
         estimates.drop(columns='timestamp', inplace=True)
         self.__estimates = estimates.sort_values(by='date', ascending=True, inplace=False)
-
-    def __training(self):
+        
+    def __get_structures(self, section: str) -> pd.DataFrame:
         """
-
-        :return:
+        
+        :param section: training or testing
+        :return: 
         """
+        
+        match section:
+            case 'training':
+                instances = self.__master.training.copy()
+            case 'testing':
+                instances = self.__master.testing.copy()
+            case _:
+                raise ValueError(f'Invalid Section: {section}')
+        
+        instances['date'] = pd.to_datetime(instances['week_ending_date'], format='%Y-%m-%d')
+        instances.drop(columns='week_ending_date', inplace=True)
+        
+        data = instances[['date']].merge(self.__estimates, how='left', on='date')
+        
+        return data    
 
-        training = self.__master.training
-        training['date'] = pd.to_datetime(training['timestamp'], unit='ms')
-
-        data = training[['date']].merge(self.__estimates, how='left', on='date')
-
-        return data
-
-    def __testing(self):
-        """
-
-        :return:
-        """
-
-        testing = self.__master.testing
-        testing['date'] = pd.to_datetime(testing['timestamp'], unit='ms')
-
-        data = testing[['date']].merge(self.__estimates, how='left', on='date')
-
-        return data
-
-    def __futures(self):
+    def __futures(self) -> pd.DataFrame:
         """
 
         :return:
@@ -67,4 +63,6 @@ class Structures:
         """
 
         return st.Structures(
-            training=self.__training(), testing=self.__testing(), futures=self.__futures())
+            training=self.__get_structures(section='training'), 
+            testing=self.__get_structures(section='testing'), 
+            futures=self.__futures())
