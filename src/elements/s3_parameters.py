@@ -17,21 +17,18 @@ class S3Parameters(typing.NamedTuple):
       The region code of the region that the data is limited to.
 
     internal : str
-      The Amazon S3 (Simple Storage Service) bucket that hosts this project's data.
-
-    path_internal_data : str
-      A root bucket-prefix for data.
-
-    path_internal_references : str
-      A root bucket-prefix for references.
-
-    path_internal_artefacts : str
-      A root bucket-prefix for the artefacts of models.
-
-    external: str
       An Amazon S3 (Simple Storage Service) bucket.
 
-    configurations: str
+    path_internal_data : str
+      The data bucket path.
+
+    path_internal_artefacts : str
+      The bucket path of the model development artefacts.
+
+    external : str
+      An Amazon S3 (Simple Storage Service) bucket.
+
+    configurations : str
       An Amazon S3 (Simple Storage Service) bucket.
     """
 
@@ -39,7 +36,6 @@ class S3Parameters(typing.NamedTuple):
     location_constraint: str
     internal: str
     path_internal_data: str
-    path_internal_references: str
     path_internal_artefacts: str
     external: str
-    configurations: str
+    configurations : str
