@@ -25,14 +25,14 @@ class Structures:
         estimates['date'] = pd.to_datetime(estimates['timestamp'], unit='us')
         estimates.drop(columns='timestamp', inplace=True)
         self.__estimates = estimates.sort_values(by='date', ascending=True, inplace=False)
-        
+
     def __get_structures(self, section: str) -> pd.DataFrame:
         """
         
         :param section: training or testing
         :return: 
         """
-        
+
         match section:
             case 'training':
                 instances = self.__master.training.copy()
@@ -40,13 +40,13 @@ class Structures:
                 instances = self.__master.testing.copy()
             case _:
                 raise ValueError(f'Invalid Section: {section}')
-        
+
         instances['date'] = pd.to_datetime(instances['week_ending_date'], format='%Y-%m-%d')
         instances.drop(columns='week_ending_date', inplace=True)
-        
+
         data = instances[['date']].merge(self.__estimates, how='left', on='date')
-        
-        return data    
+
+        return data
 
     def __futures(self) -> pd.DataFrame:
         """
@@ -63,6 +63,6 @@ class Structures:
         """
 
         return st.Structures(
-            training=self.__get_structures(section='training'), 
-            testing=self.__get_structures(section='testing'), 
+            training=self.__get_structures(section='training'),
+            testing=self.__get_structures(section='testing'),
             futures=self.__futures())
