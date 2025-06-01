@@ -37,16 +37,18 @@ class Interface:
         :return:
         """
 
+        # Codes
         _codes: list[str] = src.data.codes.Codes().exc()
-        codes = [int(os.path.split(code)[-1]) for code in _codes]
-        self.__logger.info(codes)
+        codes = [os.path.split(code)[-1] for code in _codes]
 
+        # Reference: of institutions
         reference: pd.DataFrame = src.data.reference.Reference(
             s3_parameters=self.__s3_parameters).exc(codes=codes)
-        self.__logger.info(reference)
 
+        # Menu
         src.data.menu.Menu().exc(reference=reference)
 
+        # Structure for computations: ref. src.elements.specifications.py
         specifications_: list[se.Specifications] = src.data.specifications.Specifications().exc(
             reference=reference)
 
