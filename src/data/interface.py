@@ -40,6 +40,7 @@ class Interface:
         # Codes
         _codes: list[str] = src.data.codes.Codes().exc()
         codes = [os.path.split(code)[-1] for code in _codes]
+        self.__logger.info(codes)
 
         # Reference: of institutions
         reference: pd.DataFrame = src.data.reference.Reference(
