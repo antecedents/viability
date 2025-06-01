@@ -61,7 +61,8 @@ class Initial:
         """
 
         # An instance for interacting with Amazon S3 buckets.
-        bucket = src.s3.bucket.Bucket(service=self.__service, location_constraint=self.__s3_parameters.location_constraint,
+        bucket = src.s3.bucket.Bucket(service=self.__service,
+                                      location_constraint=self.__s3_parameters.location_constraint,
                                       bucket_name=self.__bucket_name)
 
         # If the bucket exist, the prefix path is cleared.  Otherwise, the bucket is created.
