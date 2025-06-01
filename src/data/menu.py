@@ -23,16 +23,16 @@ class Menu:
     def exc(self, reference: pd.DataFrame):
         """
 
-        :param reference: The reference sheet of the water level gauges.
+        :param reference: A reference sheet.
         :return:
         """
 
         # Sort
-        excerpt = reference.copy().sort_values(by=['catchment_name', 'station_name'], ascending=True)
+        excerpt = reference.copy().sort_values(by=['health_board_name', 'hospital_name'], ascending=True)
 
         # Nodes
-        names = (excerpt['station_name'] + '/' + excerpt['catchment_name']).to_numpy()
-        frame = pd.DataFrame(data={'desc': excerpt['ts_id'].to_numpy(),
+        names = (excerpt['hospital_name'] + '/' + excerpt['health_board_name']).to_numpy()
+        frame = pd.DataFrame(data={'desc': excerpt['health_board_code'].to_numpy(),
                                    'name': names})
         nodes = frame.to_dict(orient='records')
         logging.info(nodes)
