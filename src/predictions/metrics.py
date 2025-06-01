@@ -89,6 +89,6 @@ class Metrics:
         nodes.update(specifications._asdict())
 
         message = self.__objects.write(
-            nodes=nodes, path=os.path.join(self.__path, f'{specifications.ts_id}.json'))
+            nodes=nodes, path=os.path.join(self.__path, f'{specifications.hospital_code}.json'))
 
         return message
