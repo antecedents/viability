@@ -48,7 +48,8 @@ class Assets:
         :return:
         """
 
-        elements = src.s3.keys.Keys(service=self.__service, bucket_name=self.__s3_parameters.internal).excerpt(prefix='assets/variational/')
+        elements = src.s3.keys.Keys(
+            service=self.__service, bucket_name=self.__s3_parameters.internal).excerpt(prefix='assets/variational/')
         keys = [element.split('/', maxsplit=3)[2] for element in elements]
         strings = list(set(keys))
         values = np.array(strings, dtype='datetime64')
