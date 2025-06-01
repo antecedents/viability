@@ -46,8 +46,8 @@ class Data:
         """
 
         # Reading-in
-        endpoint = os.path.join(self.__configurations.data_, str(specifications.catchment_id),
-                           str(specifications.ts_id))
+        endpoint = os.path.join(self.__configurations.data_, str(specifications.health_board_code),
+                           str(specifications.hospital_code))
 
         return mr.Master(
             estimates=self.__get_data(uri=os.path.join(endpoint, 'estimates.csv')),
