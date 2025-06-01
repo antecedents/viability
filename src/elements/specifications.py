@@ -10,14 +10,12 @@ class Specifications(typing.NamedTuple):
 
     """
 
-    station_id: int
-    station_name: str
-    catchment_id: int
-    catchment_name: str
-    ts_id: int
-    ts_name: str
-    starting: str
-    until: str
-    latitude: float
-    longitude: float
-    river_name: str
+    hospital_code: str
+    hospital_name: str
+    health_board_code: str
+    health_board_name: str
+    post_code: str
+    hscp_code: str
+    council_area: str
+    intermediate_zone: str
+    data_zone: str
