@@ -11,8 +11,8 @@ import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.functions.cache
 import src.s3.directives
-import src.s3.unload
 import src.s3.keys
+import src.s3.unload
 
 
 class Assets:
@@ -48,10 +48,17 @@ class Assets:
         :return:
         """
 
-        elements = src.s3.keys.Keys(
-            service=self.__service, bucket_name=self.__s3_parameters.internal).excerpt(prefix='assets/variational/')
-        keys = [element.split('/', maxsplit=3)[2] for element in elements]
+        # The `prefix` + `key name` strings within a specific bucket path
+        elements: list[str] = src.s3.keys.Keys(service=self.__service, bucket_name=self.__s3_parameters.internal).excerpt(
+            prefix=self.__configurations.origin_prefix_, start_after_=self.__configurations.start_after_)
+
+        # Extracting the date string per string
+        keys: list[str] = [element.split('/', maxsplit=3)[2] for element in elements]
+
+        # The unique keys, i.e., unique dates
         strings = list(set(keys))
+
+        # The latest date
         values = np.array(strings, dtype='datetime64')
         stamp = str(values.max())
 
