@@ -1,6 +1,6 @@
 <br>
 
-<p style="font-variant: small-caps">Viability</p>
+**VIABILITY**
 
 <br>
 
