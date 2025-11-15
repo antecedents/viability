@@ -1,5 +1,6 @@
 """config.py"""
 import os
+import datetime
 
 
 class Config:
@@ -25,7 +26,10 @@ class Config:
         self.menu_ = os.path.join(self.variational_, 'menu')
 
         # The model assets section
-        self.origin_ = 'assets/variational/{stamp}'
+        __starting = datetime.datetime.now() - datetime.timedelta(days=28)
+        self.origin_prefix_ = 'assets/variational/'
+        self.start_after_ = self.origin_prefix_ + __starting.strftime('%Y-%m-%d')
+        self.origin_ = self.origin_prefix_ + '{stamp}'
 
         # Keys, etc
         self.s3_parameters_key = 's3_parameters.yaml'

@@ -29,18 +29,24 @@ class Keys:
         self.__s3_client = service.s3_client
         self.__bucket = self.__s3_resource.Bucket(name=self.__bucket_name)
 
-    def excerpt(self, prefix: str) -> list[str]:
+    def excerpt(self, prefix: str, start_after_: str = '') -> list[str]:
         """
-        https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/list_objects_v2.html
+        Visit
+        <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/list_objects_v2.html">
+        list_objects_v2</a><br><br>
 
-        :param prefix: An Amazon S3 (Simple Storage Service) prefix.
+        :param prefix: An Amazon S3 (Simple Storage Service) prefix.<br>
+        :param start_after_: <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/
+                                list_objects_v2.html#:~:text=for%20all%20objects.-,StartAfter,-(string)%20%E2%80%93">
+                                Start After</a><br><br>
         :return:
             A list of Amazon S3 (Simple Storage Service) keys.
         """
 
         # Keys
         try:
-            dictionaries = self.__s3_client.list_objects_v2(Bucket=self.__bucket_name, Prefix=prefix)
+            dictionaries = self.__s3_client.list_objects_v2(
+                Bucket=self.__bucket_name, Prefix=prefix, StartAfter=start_after_)
         except botocore.exceptions.ClientError as err:
             raise err from err
 
