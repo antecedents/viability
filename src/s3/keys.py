@@ -31,7 +31,8 @@ class Keys:
 
     def excerpt(self, prefix: str, start_after_: str = '') -> list[str]:
         """
-        Visit <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/list_objects_v2.html">
+        Visit
+        <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/list_objects_v2.html">
         list_objects_v2</a><br><br>
 
         :param prefix: An Amazon S3 (Simple Storage Service) prefix.<br>
