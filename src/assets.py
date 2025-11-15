@@ -87,11 +87,10 @@ class Assets:
 
         # The artefacts, vis-à-vis modelling.
         state = self.__get_assets(origin=origin)
-        logging.info('Assets State: %s', state)
+        logging.info('Successful assets acquisition step? %s', state == 0)
 
         # Third Eye
         listings = glob.glob(pathname=os.path.join(self.__configurations.data_, '**', '*.*'), recursive=True)
-        logging.info(listings)
         if len(listings) == 0:
             src.functions.cache.Cache().exc()
             sys.exit('EMPTY ARTEFACTS DIRECTORIES')
